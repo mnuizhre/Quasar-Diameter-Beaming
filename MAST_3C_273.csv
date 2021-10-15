@@ -1,0 +1,6 @@
+#The following lines beginning with # are comments. Readable columns names and datatypes are provided as informational comment lines in addition to the database column names.
+#If you want to re-upload this table import it as a MAST Result with these header lines unmodified.
+#Observation Type, Mission, Provenance Name, Instrument, Project, Filters, Waveband, Target Name, Target Classification, Observation ID, RA, Dec, Calibration Level, Start Time, Exposure Length, Release Date, Proposal Type, Distance (")
+#@string, string, string, string, string, string, string, string, string, string, ra, dec, int, float, float, float, string, float
+intentType,obs_collection,provenance_name,instrument_name,project,filters,wavelength_region,target_name,target_classification,obs_id,s_ra,s_dec,calib_level,t_min,t_exptime,t_obs_release,proposal_type,distance
+science,K2,K2,Kepler,K2,KEPLER,Optical,ktwo229151988,,ktwo229151988-c10_lc,187.277895,2.052406,2,57582.07593294,1800,57743,,0
