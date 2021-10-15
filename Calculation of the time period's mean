@@ -1,0 +1,61 @@
+####################Code author @astrojigs#################################################
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+df = pd.read_csv('lc_data.csv')
+
+df
+
+plt.figure(figsize=(10,7))
+plt.scatter(df['TIME'][2770:],df['SAP_FLUX'][2770:])
+plt.show()
+
+def get_slope(x_data, y_data):
+    x1_list = []
+    x2_list = []
+    y1_list = []
+    y2_list = []
+    slopes = []
+    
+    # the length of both the x and y data must be same.
+    for i in range(1,len(x_data)):
+        x1 = x_data.values[i-1]
+        x2 = x_data.values[i]
+        y1 = y_data.values[i-1]
+        y2 = y_data.values[i]
+        slope = (y2-y1)/(x2-x1)
+        
+        # saves values:
+        slopes.append(slope)
+        x1_list.append(x1)
+        x2_list.append(x2)
+        y1_list.append(y1)
+        y2_list.append(y2)
+    slopes = np.where(np.isnan(np.array(slopes)),0,np.array(slopes))
+    return slopes,np.array(x1_list),np.array(x2_list),np.array(y1_list),np.array(y2_list)
+
+plt.figure(figsize=(15,10))
+plt.plot(x1,y1)
+
+selective_x = []
+selective_y = []
+
+for i in range(1,len(slopes)):
+    if (slopes[i]-slopes[i-1])>slope_threshold:
+        selective_x.append(x1[i])
+        selective_y.append(y1[i])
+        plt.scatter(x1[i],y1[i], s=100)
+
+# Get the final time intervals:
+time_intervals = []
+for i in range(1,len(selective_x)):
+    time_diff = selective_x[i]-selective_x[i-1]
+    time_intervals.append(time_diff)
+
+time_intervals = np.array(time_intervals)
+
+time_intervals.mean()
