@@ -1,0 +1,39 @@
+import numpy as np 
+from astropy.io import fits
+import matplotlib.pyplot as plt
+%matplotlib inline
+from astropy.table import Table
+
+from google.colab import drive
+drive.mount('/content/drive/')
+
+import sys
+import csv #############Since the file is very large
+
+csv.field_size_limit(sys.maxsize)
+
+hdu_list = fits.open(file_pth)
+hdu_list.info()
+
+with fits.open(file_pth) as hdu:
+    asn_table = Table(hdu[1].data)
+data = asn_table
+print(data)
+ 
+
+from astropy.io import ascii
+ascii.write(data, 'values.csv', format='csv', fast_writer=False) 
+
+import pandas as pd 
+    
+# making dataframe 
+df = pd.read_csv("values.csv") 
+   
+# output the dataframe
+print(df)
+new_df = df.replace([np.inf, -np.inf], np.nan).dropna(axis=0)
+
+from astropy.io import ascii
+ascii.write(new_df, 'values2.csv', format='csv', fast_writer=False) 
+from google.colab import files
+files.download('values2.csv')
